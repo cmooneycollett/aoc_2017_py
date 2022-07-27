@@ -9,7 +9,8 @@ def process_input_file():
     solver functions. Returned value is the captcha string given in the input
     file.
     """
-    return NotImplemented
+    with open("./input/day01.txt", encoding="utf-8") as file:
+        return file.read().strip()
 
 
 def solve_part1(captcha):
@@ -18,7 +19,12 @@ def solve_part1(captcha):
     given captcha where the pair character considered is the following character
     in the captcha (circular).
     """
-    return NotImplemented
+    total = 0
+    for (index, char) in enumerate(captcha):
+        target = (index + 1) % len(captcha)
+        if char == captcha[target]:
+            total += int(char)
+    return total
 
 
 def solve_part2(captcha):
