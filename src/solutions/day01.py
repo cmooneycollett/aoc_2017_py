@@ -33,4 +33,9 @@ def solve_part2(captcha):
     given captcha where the pair character considered is haly-way along the
     captcha from each character (circular).
     """
-    return NotImplemented
+    total = 0
+    for (index, char) in enumerate(captcha):
+        target = (index + len(captcha) // 2) % len(captcha)
+        if char == captcha[target]:
+            total += int(char)
+    return total
