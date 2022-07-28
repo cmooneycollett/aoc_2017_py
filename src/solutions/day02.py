@@ -26,8 +26,27 @@ def solve_part1(rows):
     return checksum
 
 
-def solve_part2(_rows):
+def solve_part2(rows):
     """
-    Solves AOC 2017 Day 2 Part 2 // ###
+    Solves AOC 2017 Day 2 Part 2 // Determines the sum of each row's result
+    value, which is result of the dvision for the only two numbers in the row
+    which evenly divide into each other.
     """
-    return NotImplemented
+    return sum(calculate_row_result(row) for row in rows)
+
+
+def calculate_row_result(row):
+    """
+    Calculates the result of dividing the two values N and M from the given row,
+    where N is evenly divisible by M.
+    """
+    # Check each value in row against all others (not including self)
+    for (i_num, num) in enumerate(row):
+        for (i_den, den) in enumerate(row):
+            # Value is not compared against itself
+            if i_num == i_den:
+                continue
+            # Add to the result sum if evenly divisible value pair found
+            if num % den == 0:
+                return num // den
+    return -1
