@@ -20,10 +20,7 @@ def solve_part1(rows):
     as the sum for all rows of the difference between each rows largest and
     smallest values.
     """
-    checksum = 0
-    for row in rows:
-        checksum += max(row) - min(row)
-    return checksum
+    return sum(max(row) - min(row) for row in rows)
 
 
 def solve_part2(rows):
