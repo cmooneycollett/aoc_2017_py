@@ -50,3 +50,12 @@ def test_day03_part1():
     input_data = day03.process_input_file()
     solution = day03.solve_part1(input_data)
     assert solution == 480
+
+
+def test_day03_part2():
+    """
+    Solution test method for AOC 2017 Day 3 Part 2.
+    """
+    input_data = day03.process_input_file()
+    solution = day03.solve_part2(input_data)
+    assert solution == 349975
