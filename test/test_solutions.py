@@ -4,7 +4,7 @@ each of the solved AOC 2017 problem parts. Test methods utilising pytest
 library.
 """
 
-from src.solutions import day01, day02, day03, day04, day05, day06
+from src.solutions import day01, day02, day03, day04, day05, day06, day07
 
 
 def test_day01_part1():
@@ -113,3 +113,12 @@ def test_day06_part2():
     input_data = day06.process_input_file()
     solution = day06.solve_part2(input_data)
     assert solution == 1695
+
+
+def test_day07_part1():
+    """
+    Solution test method for AOC 2017 Day 7 Part 1.
+    """
+    input_data = day07.process_input_file()
+    solution = day07.solve_part1(input_data)
+    assert solution == "hlqnsbe"
