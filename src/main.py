@@ -43,15 +43,29 @@ def solve_day03():
     print("==========")
 
 
+def solve_day04():
+    """
+    Solves AOC 2017 Day 4 Parts 1 and 2, printing out the solutions.
+    """
+    print("AOC 2017 Day 4 - \"High-Entropy Passphrases\"")
+    input_data = day04.process_input_file()
+    p1_solution = day04.solve_part1(input_data)
+    print(f"> P1 solution - {p1_solution}")
+    p2_solution = day04.solve_part2(input_data)
+    print(f"> P2 solution - {p2_solution}")
+    print("==========")
+
+
 if __name__ == "__main__":
     # Import to allow execution from project top-level directory
     import os
     import sys
     sys.path.append(os.getcwd())
     # Solution module imports
-    from src.solutions import day01, day02, day03
+    from src.solutions import day01, day02, day03, day04
     # Main solver methods
     print("==========")
     solve_day01()
     solve_day02()
     solve_day03()
+    solve_day04()
