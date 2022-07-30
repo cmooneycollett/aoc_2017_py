@@ -82,18 +82,32 @@ def solve_day06():
     print("==========")
 
 
+def solve_day07():
+    """
+    Solves AOC 2017 Day 7 Parts 1 and 2, printing out the solutions.
+    """
+    print("AOC 2017 Day 7 - \"Recursive Circus\"")
+    input_data = day07.process_input_file()
+    p1_solution = day07.solve_part1(input_data)
+    print(f"> P1 solution - {p1_solution}")
+    p2_solution = day07.solve_part2(input_data)
+    print(f"> P2 solution - {p2_solution}")
+    print("==========")
+
+
 if __name__ == "__main__":
     # Import to allow execution from project top-level directory
     import os
     import sys
     sys.path.append(os.getcwd())
     # Solution module imports
-    from src.solutions import day01, day02, day03, day04, day05, day06
+    from src.solutions import day01, day02, day03, day04, day05, day06, day07
     # Main solver methods
     print("==========")
-    # solve_day01()
-    # solve_day02()
-    # solve_day03()
-    # solve_day04()
-    # solve_day05()
+    solve_day01()
+    solve_day02()
+    solve_day03()
+    solve_day04()
+    solve_day05()
     solve_day06()
+    solve_day07()
