@@ -3,9 +3,6 @@ Solutions for AOC 2017 Day 6.
 """
 
 
-from xml.etree.ElementPath import find
-
-
 def process_input_file():
     """
     Processes the AOC 2017 Day 6 input file into the format required by the
@@ -60,6 +57,7 @@ def find_first_repeated_configuration(membanks_initial):
             break
         seen.add(membanks)
     return (membanks, seen)
+
 
 def redistribute_membanks(membanks):
     """
