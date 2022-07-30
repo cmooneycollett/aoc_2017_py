@@ -3,6 +3,9 @@ Solutions for AOC 2017 Day 6.
 """
 
 
+from xml.etree.ElementPath import find
+
+
 def process_input_file():
     """
     Processes the AOC 2017 Day 6 input file into the format required by the
@@ -19,6 +22,34 @@ def solve_part1(membanks_initial):
     cycles that must be completed before a configuration is produced that has
     been seen before.
     """
+    (_, seen) = find_first_repeated_configuration(membanks_initial)
+    return len(seen)
+
+
+def solve_part2(membanks_initial):
+    """
+    Solves AOC 2017 Day 6 Part 2 // Determines the size of the infinite loop of
+    configurations that arises from the given initial configuration of memory
+    banks.
+    """
+    (membanks_repeat, _) = find_first_repeated_configuration(membanks_initial)
+    membanks = tuple(membanks_repeat)
+    steps = 0
+    while True:
+        steps += 1
+        membanks = redistribute_membanks(membanks)
+        if membanks == membanks_repeat:
+            break
+    return steps
+
+
+def find_first_repeated_configuration(membanks_initial):
+    """
+    Determines the first memory bank configuration that is repeated by
+    conducting successive redistribution cycles starting with the given initial
+    memory bank state. Returned value is tuple containing the repeated
+    configuration and the previously seen configurations.
+    """
     membanks = tuple(membanks_initial)
     seen = set([membanks])
     while True:
@@ -28,8 +59,7 @@ def solve_part1(membanks_initial):
         if membanks in seen:
             break
         seen.add(membanks)
-    return len(seen)
-
+    return (membanks, seen)
 
 def redistribute_membanks(membanks):
     """
@@ -46,10 +76,3 @@ def redistribute_membanks(membanks):
         new_membanks[cursor] += 1
         blocks -= 1
     return tuple(new_membanks)
-
-
-def solve_part2(_membanks_initial):
-    """
-    Solves AOC 2017 Day 6 Part 2 // ###
-    """
-    return NotImplemented
