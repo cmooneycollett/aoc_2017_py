@@ -31,8 +31,23 @@ def solve_part1(jumps):
     return steps
 
 
-def solve_part2(_jumps):
+def solve_part2(jumps):
     """
-    Solves AOC 2017 Day 5 Part 2 // ###
+    Solves AOC 2017 Day 5 Part 2 // Returned value is the number of steps it
+    takes to exit the list of jumps, where each jump that is executed is
+    decremented by 1 if it was three or more, or is incremented by one
+    otherwise.
     """
-    return NotImplemented
+    test_jumps = list(jumps)
+    cursor = 0
+    steps = 0
+    while 0 <= cursor < len(test_jumps):
+        old_cursor = cursor
+        cursor += test_jumps[cursor]
+        # Increment or decrement jump value based on its current value
+        if test_jumps[old_cursor] >= 3:
+            test_jumps[old_cursor] -= 1
+        else:
+            test_jumps[old_cursor] += 1
+        steps += 1
+    return steps
