@@ -44,7 +44,6 @@ def solve_part2(program_data):
     program in the overall tower that is at the incorrect weight.
     """
     (prog_weights, prog_children) = program_data
-    prog_weights = dict(prog_weights)
     return find_corrected_program_weight(prog_weights, prog_children)
 
 
@@ -65,9 +64,6 @@ def find_corrected_program_weight_recursive(prog_weights, prog_children,
     Recursive method to process the program tree to find the program with
     incorrect weight and determine its correct weight.
     """
-    # Stop processing the program tree if the corrected weight has been found
-    if len(corrected_weight) >= 1:
-        return -1
     # Tower weight is program weight if it has no children
     if len(prog_children[base_prog]) == 0:
         return prog_weights[base_prog]
@@ -76,6 +72,9 @@ def find_corrected_program_weight_recursive(prog_weights, prog_children,
     for child in prog_children[base_prog]:
         child_weights[child] = find_corrected_program_weight_recursive(
             prog_weights, prog_children, child, corrected_weight)
+    # Stop processing the program tree if the corrected weight has been found
+    if len(corrected_weight) >= 1:
+        return -1
     # Check the balance of the child weights
     occurences = {}
     for weight in child_weights.values():
