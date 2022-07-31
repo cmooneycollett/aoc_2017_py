@@ -122,3 +122,12 @@ def test_day07_part1():
     input_data = day07.process_input_file()
     solution = day07.solve_part1(input_data)
     assert solution == "hlqnsbe"
+
+
+def test_day07_part2():
+    """
+    Solution test method for AOC 2017 Day 7 Part 2.
+    """
+    input_data = day07.process_input_file()
+    solution = day07.solve_part2(input_data)
+    assert solution == 1993
