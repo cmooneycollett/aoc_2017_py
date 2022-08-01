@@ -159,3 +159,12 @@ def test_day09_part1():
     input_data = day09.process_input_file()
     solution = day09.solve_part1(input_data)
     assert solution == 16869
+
+
+def test_day09_part2():
+    """
+    Solution test method for AOC 2017 Day 9 Part 2.
+    """
+    input_data = day09.process_input_file()
+    solution = day09.solve_part2(input_data)
+    assert solution == 7284

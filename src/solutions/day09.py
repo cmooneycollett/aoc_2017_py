@@ -45,8 +45,25 @@ def solve_part1(char_stream):
     return score
 
 
-def solve_part2(_input_data):
+def solve_part2(char_stream):
     """
-    Solves AOC 2017 Day 9 Part 2 // ###
+    Solves AOC 2017 Day 9 Part 2 // Counts the number of non-cancelled
+    within the garbage of the given character stream.
     """
-    return NotImplemented
+    garbage_char_count = 0
+    cursor = 0
+    in_garbage = False
+    while cursor < len(char_stream):
+        if in_garbage:
+            garbage_char_count += 1
+        match char_stream[cursor]:
+            case "<":
+                in_garbage = True
+            case ">":
+                in_garbage = False
+                garbage_char_count -= 1
+            case "!":
+                cursor += 1
+                garbage_char_count -= 1
+        cursor += 1
+    return garbage_char_count
