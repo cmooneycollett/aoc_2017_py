@@ -68,11 +68,13 @@ def solve_part1(instructions):
     return max_at_end
 
 
-def solve_part2(_instructions):
+def solve_part2(instructions):
     """
-    Solves AOC 2017 Day 8 Part 2 // ###
+    Solves AOC 2017 Day 8 Part 2 // Returns the largest value observed in a
+    register at any point during execution.
     """
-    return NotImplemented
+    (_, max_during) = evaluate_instructions(instructions)
+    return max_during
 
 
 def evaluate_instructions(instructions):
@@ -108,8 +110,9 @@ def evaluate_instructions(instructions):
         if check_exp:
             if instruct.is_increment:
                 regs[instruct.target_reg] += instruct.value
-                if regs[instruct.target_reg] > max_value:
-                    max_value = regs[instruct.target_reg]
             else:
                 regs[instruct.target_reg] -= instruct.value
+            # Check if new maximum register value seen
+            if regs[instruct.target_reg] > max_value:
+                max_value = regs[instruct.target_reg]
     return (max(regs.values()), max_value)
