@@ -3,7 +3,7 @@ This module contains additional test methods used to test AOC 2017 solution
 code against example inputs. Test methods utilising pytest library.
 """
 
-from src.solutions import day07, day08
+from src.solutions import day07, day08, day09
 
 
 def test_day07_part1_ex01():
@@ -40,3 +40,12 @@ def test_day08_part2_ex01():
     input_data = day08.process_input_file("./input/examples/day08_ex01.txt")
     solution = day08.solve_part2(input_data)
     assert solution == 10
+
+
+def test_day09_part1_ex01():
+    """
+    Test method for AOC 2017 Day 9 Part 1 using example input 7.
+    """
+    input_data = day09.process_input_file("./input/examples/day09_ex07.txt")
+    solution = day09.solve_part1(input_data)
+    assert solution == 9
