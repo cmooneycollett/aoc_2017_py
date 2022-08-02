@@ -3,13 +3,13 @@ Solutions for AOC 2017 Day 1.
 """
 
 
-def process_input_file():
+def process_input_file(filepath="./input/day01.txt"):
     """
     Processes the AOC 2017 Day 1 input file into the format required by the
     solver functions. Returned value is the captcha string given in the input
     file.
     """
-    with open("./input/day01.txt", encoding="utf-8") as file:
+    with open(filepath, encoding="utf-8") as file:
         return file.read().strip()
 
 
