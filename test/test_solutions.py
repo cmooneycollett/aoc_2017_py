@@ -177,3 +177,12 @@ def test_day10_part1():
     input_data = day10.process_input_file()
     solution = day10.solve_part1(input_data)
     assert solution == 38628
+
+
+def test_day10_part2():
+    """
+    Solution test method for AOC 2017 Day 10 Part 2.
+    """
+    input_data = day10.process_input_file()
+    solution = day10.solve_part2(input_data)
+    assert solution == "e146210a34221a7f0906da15c1c979a"
