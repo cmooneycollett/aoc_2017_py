@@ -195,3 +195,12 @@ def test_day11_part1():
     input_data = day11.process_input_file()
     solution = day11.solve_part1(input_data)
     assert solution == 877
+
+
+def test_day11_part2():
+    """
+    Solution test method for AOC 2017 Day 11 Part 2.
+    """
+    input_data = day11.process_input_file()
+    solution = day11.solve_part2(input_data)
+    assert solution == 1622
