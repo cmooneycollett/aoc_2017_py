@@ -5,7 +5,7 @@ library.
 """
 
 from src.solutions import day01, day02, day03, day04, day05, day06, day07, \
-    day08, day09
+    day08, day09, day10
 
 
 def test_day01_part1():
@@ -168,3 +168,12 @@ def test_day09_part2():
     input_data = day09.process_input_file()
     solution = day09.solve_part2(input_data)
     assert solution == 7284
+
+
+def test_day10_part1():
+    """
+    Solution test method for AOC 2017 Day 10 Part 1.
+    """
+    input_data = day10.process_input_file()
+    solution = day10.solve_part1(input_data)
+    assert solution == 38628
