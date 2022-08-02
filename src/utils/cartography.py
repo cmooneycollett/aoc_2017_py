@@ -15,15 +15,3 @@ class Location2D:
     """
     loc_x: int
     loc_y: int
-
-
-@dataclass(frozen=True, eq=True)
-class Location3D:
-    """
-    Represents a point location on a three-dimensional plane. Instances of this
-    dataclass will be immutable, and can be safely hashed and added to
-    collections like dicts (as keys) and sets.
-    """
-    loc_x: int
-    loc_y: int
-    loc_z: int
