@@ -3,13 +3,13 @@ Solutions for AOC 2017 Day 2.
 """
 
 
-def process_input_file():
+def process_input_file(filepath="./input/day02.txt"):
     """
     Processes the AOC 2017 Day 2 input file into the format required by the
     solver functions. Returned value is list containing each row of numbers
     as a list, given in input file as tab-separated values.
     """
-    with open("./input/day02.txt", encoding="utf-8") as file:
+    with open(filepath, encoding="utf-8") as file:
         return [[int(value) for value in line.strip().split()]
                 for line in file.readlines() if len(line.strip()) > 0]
 

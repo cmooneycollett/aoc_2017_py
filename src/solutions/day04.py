@@ -5,13 +5,13 @@ Solutions for AOC 2017 Day 4.
 import itertools
 
 
-def process_input_file():
+def process_input_file(filepath="./input/day04.txt"):
     """
     Processes the AOC 2017 Day 4 input file into the format required by the
     solver functions. Returned value is list containings lists for each line
     with the words on each line of the input file.
     """
-    with open("./input/day04.txt", encoding="utf-8") as file:
+    with open(filepath, encoding="utf-8") as file:
         return [line.strip().split() for line in file.readlines()
                 if len(line.strip()) > 0]
 

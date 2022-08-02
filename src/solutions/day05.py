@@ -3,13 +3,13 @@ Solutions for AOC 2017 Day 5.
 """
 
 
-def process_input_file():
+def process_input_file(filepath="./input/day05.txt"):
     """
     Processes the AOC 2017 Day 5 input file into the format required by the
     solver functions. Returned value is list of integers given in the input
     file.
     """
-    with open("./input/day05.txt", encoding="utf-8") as file:
+    with open(filepath, encoding="utf-8") as file:
         return [int(line.strip()) for line in file.readlines()
                 if len(line.strip()) > 0]
 

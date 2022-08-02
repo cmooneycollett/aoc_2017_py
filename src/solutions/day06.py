@@ -3,13 +3,13 @@ Solutions for AOC 2017 Day 6.
 """
 
 
-def process_input_file():
+def process_input_file(filepath="./input/day06.txt"):
     """
     Processes the AOC 2017 Day 6 input file into the format required by the
     solver functions. Returned value is the list representing the initial state
     of the memory banks given in the input file.
     """
-    with open("./input/day06.txt", encoding="utf-8") as file:
+    with open(filepath, encoding="utf-8") as file:
         return tuple(int(bank) for bank in file.read().strip().split())
 
 
