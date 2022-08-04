@@ -213,3 +213,12 @@ def test_day12_part1():
     input_data = day12.process_input_file()
     solution = day12.solve_part1(input_data)
     assert solution == 288
+
+
+def test_day12_part2():
+    """
+    Solution test method for AOC 2017 Day 12 Part 2.
+    """
+    input_data = day12.process_input_file()
+    solution = day12.solve_part2(input_data)
+    assert solution == 211
