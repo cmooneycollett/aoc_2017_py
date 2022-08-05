@@ -29,8 +29,22 @@ def solve_part1(firewall_layers):
                if ldepth % (2 * (lrange - 1)) == 0)
 
 
-def solve_part2(_firewall_layers):
+def solve_part2(firewall_layers):
     """
-    Solves AOC 2017 Day 13 Part 2 // ###
+    Solves AOC 2017 Day 13 Part 2 // Determines the fewest number of picoseconds
+    that the packet needs to be delayed to pass through the firewall without
+    being caught.
     """
-    return NotImplemented
+    delta_ps = 0
+    while True:
+        caught = False
+        for (ldepth, lrange) in firewall_layers.items():
+            cycle = 2 * (lrange - 1)
+            # Packet reaches the layer at time: ldepth + delta_ps (in ps)
+            if (ldepth + delta_ps) % cycle == 0:
+                caught = True
+                break
+        if not caught:
+            break
+        delta_ps += 1
+    return delta_ps
