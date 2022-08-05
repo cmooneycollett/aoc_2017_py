@@ -160,6 +160,19 @@ def solve_day12():
     print("==========")
 
 
+def solve_day13():
+    """
+    Solves AOC 2017 Day 13 Parts 1 and 2, printing out the solutions.
+    """
+    print("AOC 2017 Day 13 - \"Packet Scanners\"")
+    input_data = day13.process_input_file()
+    p1_solution = day13.solve_part1(input_data)
+    print(f"> P1 solution - {p1_solution}")
+    p2_solution = day13.solve_part2(input_data)
+    print(f"> P2 solution - {p2_solution}")
+    print("==========")
+
+
 if __name__ == "__main__":
     # Import to allow execution from project top-level directory
     import os
@@ -167,7 +180,7 @@ if __name__ == "__main__":
     sys.path.append(os.getcwd())
     # Solution module imports
     from src.solutions import day01, day02, day03, day04, day05, day06, day07, \
-        day08, day09, day10, day11, day12
+        day08, day09, day10, day11, day12, day13
     # Main solver methods
     print("==========")
     solve_day01()
@@ -182,3 +195,4 @@ if __name__ == "__main__":
     solve_day10()
     solve_day11()
     solve_day12()
+    solve_day13()
