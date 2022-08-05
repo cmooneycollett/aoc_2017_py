@@ -94,3 +94,12 @@ def test_day13_part1_ex01():
     input_data = day13.process_input_file("./input/examples/day13_ex01.txt")
     solution = day13.solve_part1(input_data)
     assert solution == 24
+
+
+def test_day13_part2_ex01():
+    """
+    Test method for AOC 2017 Day 13 Part 2 using example input 1.
+    """
+    input_data = day13.process_input_file("./input/examples/day13_ex01.txt")
+    solution = day13.solve_part2(input_data)
+    assert solution == 10
