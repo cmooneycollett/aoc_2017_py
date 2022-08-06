@@ -5,7 +5,7 @@ library.
 """
 
 from src.solutions import day01, day02, day03, day04, day05, day06, day07, \
-    day08, day09, day10, day11, day12, day13
+    day08, day09, day10, day11, day12, day13, day14
 
 
 def test_day01_part1():
@@ -185,7 +185,7 @@ def test_day10_part2():
     """
     input_data = day10.process_input_file()
     solution = day10.solve_part2(input_data)
-    assert solution == "e146210a34221a7f0906da15c1c979a"
+    assert solution == "e1462100a34221a7f0906da15c1c979a"
 
 
 def test_day11_part1():
@@ -240,3 +240,21 @@ def test_day13_part2():
     input_data = day13.process_input_file()
     solution = day13.solve_part2(input_data)
     assert solution == 3907470
+
+
+def test_day14_part1():
+    """
+    Solution test method for AOC 2017 Day 14 Part 1.
+    """
+    input_data = day14.process_input_file()
+    solution = day14.solve_part1(input_data)
+    assert solution == 8190
+
+
+def test_day14_part2():
+    """
+    Solution test method for AOC 2017 Day 14 Part 1.
+    """
+    input_data = day14.process_input_file()
+    solution = day14.solve_part2(input_data)
+    assert solution == 1134
