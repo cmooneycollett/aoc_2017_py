@@ -185,7 +185,7 @@ def test_day10_part2():
     """
     input_data = day10.process_input_file()
     solution = day10.solve_part2(input_data)
-    assert solution == "e146210a34221a7f0906da15c1c979a"
+    assert solution == "e1462100a34221a7f0906da15c1c979a"
 
 
 def test_day11_part1():
