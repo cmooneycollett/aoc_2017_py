@@ -4,6 +4,7 @@ Solutions for AOC 2017 Day 15.
 
 import re
 
+
 class Generator:
     """
     Represents a number generator.
@@ -60,8 +61,19 @@ def solve_part1(seeds):
     return judge_score
 
 
-def solve_part2(_seeds):
+def solve_part2(seeds):
     """
-    Solves AOC 2017 Day 15 Part 2 // ###
+    Solves AOC 2017 Day 15 Part 2 // Calculates the judge's final score after
+    5 million pairs generated from two generators using the given seeds, where
+    first generator looks for values that are multiples of 4 and the second
+    generator looks for values that are multiples of 8.
     """
-    return NotImplemented
+    gen1 = Generator(seeds[0], 16807, lambda n: n % 4 == 0)
+    gen2 = Generator(seeds[1], 48271, lambda n: n % 8 == 0)
+    judge_score = 0
+    for _ in range(5000000):
+        gen1_binchunk = bin(gen1.next())[-16:]
+        gen2_binchunk = bin(gen2.next())[-16:]
+        if gen1_binchunk == gen2_binchunk:
+            judge_score += 1
+    return judge_score
