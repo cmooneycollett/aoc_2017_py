@@ -28,8 +28,8 @@ def calculate_knot_hash(input_string):
         for delta in range(1, 16):
             xor_result ^= strand[block_start + delta]
         dense_hash.append(xor_result)
-    # Convert dense hash to hexidecimal representation
-    hex_digest = [str(hex(block))[2:] for block in dense_hash]
+    # Convert each dense hash block to two-digit hexadecimal num with zero pad
+    hex_digest = [format(block, "02x") for block in dense_hash]
     return "".join(hex_digest)
 
 
