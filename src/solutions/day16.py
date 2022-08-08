@@ -49,11 +49,26 @@ def solve_part1(dance_moves):
     return conduct_dance("abcdefghijklmnop", dance_moves)
 
 
-def solve_part2(_dance_moves):
+def solve_part2(dance_moves):
     """
-    Solves AOC 2017 Day 16 Part 2 // ###
+    Solves AOC 2017 Day 16 Part 2 // Determines the order of the programs "a"
+    through "p" after they have finished one billion dances using the given
+    moves.
     """
-    return NotImplemented
+    # Find the sequence of orders that is repeated
+    orders = [conduct_dance("abcdefghijklmnop", dance_moves)]
+    while True:
+        output = conduct_dance(orders[-1], dance_moves)
+        if output == orders[0]:
+            break
+        orders.append(output)
+    # Determine the order of the programs after one billion dances
+    remainder = 1000000000 % len(orders)
+    if remainder == 0:
+        remainder = len(orders) - 1
+    else:
+        remainder = remainder - 1
+    return orders[remainder]
 
 
 def conduct_dance(start_programs, dance_moves):
