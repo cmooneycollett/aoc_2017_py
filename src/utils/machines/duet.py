@@ -70,18 +70,22 @@ class SoundComputer:
         self.cursor = 0
         self.sounds_sent = deque([])
         self.sounds_received = deque([])
-        self.is_awaiting_input = False
-        self.is_halted = False
+        self.awaiting_input = False
+        self.halted = False
+        self.total_sounds_sent = 0
 
     def execute_program(self):
         """
         Executes the program contained within the sound computer.
         """
+        if self.halted:
+            return
         while 0 <= self.cursor < len(self.instructions):
             match self.instructions[self.cursor][0]:
                 case Instruction.SND:
                     param = self.instructions[self.cursor][1]
                     self.sounds_sent.append(self.try_register_read(param))
+                    self.total_sounds_sent += 1
                 case Instruction.SET:
                     reg = self.instructions[self.cursor][1]
                     param = self.instructions[self.cursor][2]
@@ -101,10 +105,16 @@ class SoundComputer:
                     self.registers[param1] %= self.try_register_read(param2)
                 case Instruction.RCV:
                     param = self.instructions[self.cursor][1]
-                    check_value = self.try_register_read(param)
-                    if check_value != 0:
-                        if not self.duet_mode:
-                            return self.sounds_sent[-1]
+                    if not self.duet_mode:
+                        check_value = self.try_register_read(param)
+                        if check_value != 0:
+                            return
+                    else:
+                        if len(self.sounds_received) == 0:
+                            self.awaiting_input = True
+                            return
+                        self.awaiting_input = False
+                        self.registers[param] = self.sounds_received.popleft()
                 case Instruction.JGZ:
                     param1 = self.instructions[self.cursor][1]
                     param2 = self.instructions[self.cursor][2]
@@ -113,7 +123,13 @@ class SoundComputer:
                     if check_value > 0:
                         self.cursor += jump_value - 1
             self.cursor += 1
-        self.is_halted = True
+        self.halted = True
+
+    def get_total_sounds_sent(self):
+        """
+        Returns the total number of sounds sent by the sound computer.
+        """
+        return self.total_sounds_sent
 
     def try_register_read(self, param):
         """
@@ -130,6 +146,23 @@ class SoundComputer:
         """
         self.registers[register] = value
 
+    def get_sent_sounds(self):
+        """
+        Gets the sounds sent by the sound computer, and empties the sent buffer
+        for the sound computer.
+        """
+        sounds = self.sounds_sent
+        self.sounds_sent = deque([])
+        return sounds
+
+    def receive_sounds(self, sounds):
+        """
+        Adds the sounds to the end of the received queue for the sound computer.
+        """
+        self.sounds_received.extend(sounds)
+        if len(sounds) > 0:
+            self.awaiting_input = False
+
     def get_last_played_sound(self):
         """
         Gets the last sound played by the sound computer.
@@ -143,3 +176,15 @@ class SoundComputer:
         Sets the mode of the sound computer to be duet-mode or single-mode.
         """
         self.duet_mode = duet_mode
+
+    def is_halted(self):
+        """
+        Checks if the sound computer is halted.
+        """
+        return self.halted
+
+    def is_awaiting_input(self):
+        """
+        Checks if the sound computer is awaiting input.
+        """
+        return self.awaiting_input

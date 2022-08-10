@@ -149,3 +149,12 @@ def test_day18_part1_ex01():
     input_data = day18.process_input_file("./input/examples/day18_ex01.txt")
     solution = day18.solve_part1(input_data)
     assert solution == 4
+
+
+def test_day18_part2_ex02():
+    """
+    Test method for AOC 2017 Day 18 Part 2 using example input 2.
+    """
+    input_data = day18.process_input_file("./input/examples/day18_ex02.txt")
+    solution = day18.solve_part2(input_data)
+    assert solution == 3
