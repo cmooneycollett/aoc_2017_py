@@ -34,11 +34,13 @@ def solve_part1(routing_map):
     return letters
 
 
-def solve_part2(_routing_map):
+def solve_part2(routing_map):
     """
-    Solves AOC 2017 Day 19 Part 2 // ###
+    Solves AOC 2017 Day 19 Part 2 // Determines the number of steps required
+    for the packet to follow the path through the routing map.
     """
-    return NotImplemented
+    (_, steps) = follow_routing_map(routing_map)
+    return steps
 
 
 def follow_routing_map(routing_map):
