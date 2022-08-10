@@ -4,6 +4,18 @@ and objects in N-dimensional spaces.
 """
 
 from dataclasses import dataclass
+from enum import Enum, auto, unique
+
+@unique
+class CardinalDirection(Enum):
+    """
+    Represents the four different cardinal directions of north, east, south and
+    west.
+    """
+    NORTH = auto()
+    EAST = auto()
+    SOUTH = auto()
+    WEST = auto()
 
 
 @dataclass(frozen=True, eq=True)
