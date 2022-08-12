@@ -251,6 +251,19 @@ def solve_day19():
     print("==========")
 
 
+def solve_day20():
+    """
+    Solves AOC 2017 Day 20 Parts 1 and 2, printing out the solutions.
+    """
+    print("AOC 2017 Day 20 - \"Particle Swarm\"")
+    input_data = day20.process_input_file()
+    p1_solution = day20.solve_part1(input_data)
+    print(f"> P1 solution - {p1_solution}")
+    p2_solution = day20.solve_part2(input_data)
+    print(f"> P2 solution - {p2_solution}")
+    print("==========")
+
+
 if __name__ == "__main__":
     # Import to allow execution from project top-level directory
     import os
@@ -259,7 +272,7 @@ if __name__ == "__main__":
     # Solution module imports
     from src.solutions import day01, day02, day03, day04, day05, day06, day07, \
         day08, day09, day10, day11, day12, day13, day14, day15, day16, day17, \
-        day18, day19
+        day18, day19, day20
     # Main solver methods
     print("==========")
     solve_day01()
@@ -281,3 +294,4 @@ if __name__ == "__main__":
     solve_day17()
     solve_day18()
     solve_day19()
+    solve_day20()
