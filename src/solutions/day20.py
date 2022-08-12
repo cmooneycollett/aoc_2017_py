@@ -89,12 +89,6 @@ class Particle:
         self.pos = (self.pos[0] + self.vel[0], self.pos[1] + self.vel[1],
                     self.pos[2] + self.vel[2])
 
-    def check_collision(self, other_pos):
-        """
-        Checks if the particle's position and the other position are the same.
-        """
-        return self.pos == other_pos
-
 
 def process_input_file(filepath="./input/day20.txt"):
     """
@@ -132,14 +126,16 @@ def solve_part1(input_particles):
     return particle_id
 
 
-def solve_part2(_input_particles):
+def solve_part2(input_particles):
     """
-    Solves AOC 2017 Day 20 Part 2 // ###
+    Solves AOC 2017 Day 20 Part 2 // Determines the number of particles
+    remaining after all collisions have been resolved.
     """
-    return NotImplemented
+    (_, particle_count) = simulate_particles(input_particles, True)
+    return particle_count
 
 
-def simulate_particles(input_particles, removed_collided=False):
+def simulate_particles(input_particles, remove_collided=False):
     """
     Simulates the movement of the given particles. Returns the ID of the
     particle that remains closest to the origin (0,0,0) in the long-term and
@@ -152,47 +148,60 @@ def simulate_particles(input_particles, removed_collided=False):
         dist = particle.get_manhattan_distance_origin()
         particle_distances[code] = deque([dist])
     while True:
-        # Update particle locations
-        distance_grades = {}
+        dist_grades = {}
+        pos_counts = {}
         for code in particles:
+            # Update particle location
             particles[code].move()
+            if particles[code].pos not in pos_counts:
+                pos_counts[particles[code].pos] = 1
+            else:
+                pos_counts[particles[code].pos] += 1
+            # Determine particle distance grade for current tick
             dist = particles[code].get_manhattan_distance_origin()
             particle_distances[code].append(dist)
             while len(particle_distances[code]) > 4:
                 particle_distances[code].popleft()
             if len(particle_distances[code]) == 4:
-                distance_grades[code] = DistanceGrade.determine_grade(
+                dist_grades[code] = DistanceGrade.determine_grade(
                     particle_distances[code])
         # Remove particles that have collided
-        if removed_collided:
-            ()
+        if remove_collided:
+            codes_to_remove = []
+            for (code, particle) in particles.items():
+                if pos_counts[particle.pos] > 1:
+                    codes_to_remove.append(code)
+            for code in codes_to_remove:
+                particles.pop(code)
+                dist_grades.pop(code)
         # Check distance grades
-        if len(distance_grades) == len(particles):
-            count_same = list(distance_grades.values()
-                              ).count(DistanceGrade.SAME)
-            count_inc_low = list(distance_grades.values()).count(
-                DistanceGrade.INCREASING_LOWER)
-            count_inc_same = list(distance_grades.values()).count(
-                DistanceGrade.INCREASING_SAME)
-            count_inc_high = list(distance_grades.values()).count(
-                DistanceGrade.INCREASING_HIGHER)
-            check_count = count_same + count_inc_same + count_inc_high
-            if check_count == len(distance_grades):
+        if len(dist_grades) == len(particles):
+            # Check if we are in condition where no more collisions are possible
+            c_same = list(dist_grades.values()).count(DistanceGrade.SAME)
+            c_inc_low = list(
+                dist_grades.values()).count(DistanceGrade.INCREASING_LOWER)
+            c_inc_same = list(
+                dist_grades.values()).count(DistanceGrade.INCREASING_SAME)
+            c_inc_high = list(
+                dist_grades.values()).count(DistanceGrade.INCREASING_HIGHER)
+            check_count = c_same + c_inc_low + c_inc_same + c_inc_high
+            if check_count == len(dist_grades):
                 # Find the particle with lowest rate of distance change from origin
                 candidates = set()
-                if count_same > 0:
-                    candidates = set(code for (code, grade) in distance_grades.items()
+                if c_same > 0:
+                    candidates = set(code for (code, grade) in dist_grades.items()
                                      if grade == DistanceGrade.SAME)
-                elif count_inc_low:
-                    candidates = set(code for (code, grade) in distance_grades.items()
-                                     if grade == DistanceGrade.INCREASING_LOWER)                                  
-                elif count_inc_same > 0:
-                    candidates = set(code for (code, grade) in distance_grades.items()
+                elif c_inc_low:
+                    candidates = set(code for (code, grade) in dist_grades.items()
+                                     if grade == DistanceGrade.INCREASING_LOWER)
+                elif c_inc_same > 0:
+                    candidates = set(code for (code, grade) in dist_grades.items()
                                      if grade == DistanceGrade.INCREASING_SAME)
                 else:
-                    candidates = set(code for (code, grade) in distance_grades.items()
+                    candidates = set(code for (code, grade) in dist_grades.items()
                                      if grade == DistanceGrade.INCREASING_HIGHER)
                 candidate_distances = {code: dist[-1] for (code, dist) in
                                        particle_distances.items() if code in candidates}
-                particle_id = min(candidate_distances, key=candidate_distances.get)
+                particle_id = min(candidate_distances,
+                                  key=candidate_distances.get)
                 return (particle_id, len(particles))
