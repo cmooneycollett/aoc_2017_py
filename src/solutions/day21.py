@@ -28,8 +28,25 @@ def solve_part1(rules):
     Solves AOC 2017 Day 21 Part 1 // Determines how many pixels stay on after
     applying five iterations of the enhancement rules.
     """
+    artgrid = generate_art(rules, 5)
+    return (artgrid == b"#").sum()
+
+
+def solve_part2(rules):
+    """
+    Solves AOC 2017 Day 21 Part 2 // Determines how many pixels stay on after
+    applying 18 iterations of the enhancement rules.
+    """
+    artgrid = generate_art(rules, 18)
+    return (artgrid == b"#").sum()
+
+def generate_art(rules, iterations):
+    """
+    Generates the art array by applying the specified number of iterations of
+    the rules to the starting pattern (3x3): ".#./..#/###"
+    """
     artgrid = numpy.array([[".", "#", "."], [".", ".", "#"], ["#", "#", "#"]], dtype="S1")
-    for _ in range(5):
+    for _ in range(iterations):
         if artgrid.shape[0] % 2 == 0:
             new_width = (artgrid.shape[0] // 2) * 3
             new_artgrid = numpy.empty((new_width, new_width), dtype="S1")
@@ -100,11 +117,4 @@ def solve_part1(rules):
                         windowgrid = numpy.fliplr(windowgrid)
                         windowgrid = numpy.flipud(windowgrid)
             artgrid = new_artgrid
-    return (artgrid == b"#").sum()
-
-
-def solve_part2(_rules):
-    """
-    Solves AOC 2017 Day ## Part 2 // ###
-    """
-    return NotImplemented
+    return artgrid
