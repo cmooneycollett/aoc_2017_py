@@ -4,7 +4,7 @@ code against example inputs. Test methods utilising pytest library.
 """
 
 from src.solutions import day07, day08, day09, day12, day13, day14, day15, \
-    day18
+    day18, day22
 
 
 def test_day07_part1_ex01():
@@ -158,3 +158,12 @@ def test_day18_part2_ex02():
     input_data = day18.process_input_file("./input/examples/day18_ex02.txt")
     solution = day18.solve_part2(input_data)
     assert solution == 3
+
+
+def test_day22_part1_ex01():
+    """
+    Test method for AOC 2017 Day 22 Part 1 using example input 1.
+    """
+    input_data = day22.process_input_file("./input/examples/day22_ex01.txt")
+    solution = day22.solve_part1(input_data)
+    assert solution == 5587
