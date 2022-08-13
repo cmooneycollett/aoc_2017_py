@@ -6,6 +6,7 @@ and objects in N-dimensional spaces.
 from dataclasses import dataclass
 from enum import Enum, auto, unique
 
+
 @unique
 class CardinalDirection(Enum):
     """
@@ -17,39 +18,63 @@ class CardinalDirection(Enum):
     SOUTH = auto()
     WEST = auto()
 
-    def rot90_cw(self):
+    def rot90_cw(self, times=1):
         """
         Returns the CardinalDirection resulting from rotating by 90 degrees in
-        the clockwise direction.
+        the clockwise direction, repeating the specified number of times.
         """
-        match self:
-            case CardinalDirection.NORTH:
-                return CardinalDirection.EAST
-            case CardinalDirection.EAST:
-                return CardinalDirection.SOUTH
-            case CardinalDirection.SOUTH:
-                return CardinalDirection.WEST
-            case CardinalDirection.WEST:
-                return CardinalDirection.NORTH
-            case _:
-                return None
+        direction = self
+        for _ in range(times):
+            match direction:
+                case CardinalDirection.NORTH:
+                    direction = CardinalDirection.EAST
+                case CardinalDirection.EAST:
+                    direction = CardinalDirection.SOUTH
+                case CardinalDirection.SOUTH:
+                    direction = CardinalDirection.WEST
+                case CardinalDirection.WEST:
+                    direction = CardinalDirection.NORTH
+                case _:
+                    direction = None
+        return direction
 
-    def rot90_ccw(self):
+    def rot90_ccw(self, times=1):
         """
         Returns the CardinalDirection resulting from rotating by 90 degrees in
-        the counter-clockwise direction.
+        the counter-clockwise direction, repeating the specified number of
+        times.
         """
+        direction = self
+        for _ in range(times):
+            match direction:
+                case CardinalDirection.NORTH:
+                    direction = CardinalDirection.WEST
+                case CardinalDirection.EAST:
+                    direction = CardinalDirection.NORTH
+                case CardinalDirection.SOUTH:
+                    direction = CardinalDirection.EAST
+                case CardinalDirection.WEST:
+                    direction = CardinalDirection.SOUTH
+                case _:
+                    direction = None
+        return direction
+
+    def update_location(self, loc2d):
+        """
+        Updates the given two-dimensional location based on the current
+        CardinalDirection.
+        """
+        new_loc2d = loc2d
         match self:
             case CardinalDirection.NORTH:
-                return CardinalDirection.WEST
+                new_loc2d = Location2D(loc2d.loc_x, loc2d.loc_y - 1)
             case CardinalDirection.EAST:
-                return CardinalDirection.NORTH
+                new_loc2d = Location2D(loc2d.loc_x + 1, loc2d.loc_y)
             case CardinalDirection.SOUTH:
-                return CardinalDirection.EAST
+                new_loc2d = Location2D(loc2d.loc_x, loc2d.loc_y + 1)
             case CardinalDirection.WEST:
-                return CardinalDirection.SOUTH
-            case _:
-                return None
+                new_loc2d = Location2D(loc2d.loc_x - 1, loc2d.loc_y)
+        return new_loc2d
 
 
 @dataclass(frozen=True, eq=True)
