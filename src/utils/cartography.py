@@ -17,6 +17,40 @@ class CardinalDirection(Enum):
     SOUTH = auto()
     WEST = auto()
 
+    def rot90_cw(self):
+        """
+        Returns the CardinalDirection resulting from rotating by 90 degrees in
+        the clockwise direction.
+        """
+        match self:
+            case CardinalDirection.NORTH:
+                return CardinalDirection.EAST
+            case CardinalDirection.EAST:
+                return CardinalDirection.SOUTH
+            case CardinalDirection.SOUTH:
+                return CardinalDirection.WEST
+            case CardinalDirection.WEST:
+                return CardinalDirection.NORTH
+            case _:
+                return None
+
+    def rot90_ccw(self):
+        """
+        Returns the CardinalDirection resulting from rotating by 90 degrees in
+        the counter-clockwise direction.
+        """
+        match self:
+            case CardinalDirection.NORTH:
+                return CardinalDirection.WEST
+            case CardinalDirection.EAST:
+                return CardinalDirection.NORTH
+            case CardinalDirection.SOUTH:
+                return CardinalDirection.EAST
+            case CardinalDirection.WEST:
+                return CardinalDirection.SOUTH
+            case _:
+                return None
+
 
 @dataclass(frozen=True, eq=True)
 class Location2D:
