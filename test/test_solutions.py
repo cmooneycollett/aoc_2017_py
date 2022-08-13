@@ -376,3 +376,12 @@ def test_day21_part1():
     input_data = day21.process_input_file()
     solution = day21.solve_part1(input_data)
     assert solution == 203
+
+
+def test_day21_part2():
+    """
+    Solution test method for AOC 2017 Day 21 Part 2.
+    """
+    input_data = day21.process_input_file()
+    solution = day21.solve_part2(input_data)
+    assert solution == 3342470
