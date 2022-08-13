@@ -223,3 +223,9 @@ class SoundComputer:
         instruction.
         """
         return self.execution_counts[Instruction.MUL]
+
+    def get_instructions(self):
+        """
+        Gets the instructions of the SoundComputer;
+        """
+        return self.instructions
