@@ -3,6 +3,7 @@ Solutions for AOC 2017 Day 23 - "Coprocessor Conflagration".
 """
 
 from copy import deepcopy
+import math
 from src.utils.machines.duet import SoundComputer
 
 
@@ -26,8 +27,33 @@ def solve_part1(sound_computer_initial):
     return sound_computer.get_execution_count_mul()
 
 
-def solve_part2(_sound_computer_initial):
+def solve_part2(sound_computer_initial):
     """
-    Solves AOC 2017 Day 23 Part 2 // ###
+    Solves AOC 2017 Day 23 Part 2 // Returns the value held in register "h" of
+    SoundComputer after program execution halts, with debug switch toggled off.
+
+    Optimised program counts the number of composite numbers (increasing by the
+    step coded into the program - second-last instruction) between a lower and
+    upper limit. The lower and upper limits are calculated based on the seed
+    value coded in the first instruction of the program.
     """
-    return NotImplemented
+    # Optimised execution of the sound computer code
+    seed = abs(int(sound_computer_initial.get_instructions()[0][2]))
+    step = abs(int(sound_computer_initial.get_instructions()[-2][2]))
+    lower = seed * 100 + 100000
+    upper = lower + 17000
+    comp_count = 0
+    for num in range(lower, upper + 1, step):
+        if not is_prime(num):
+            comp_count += 1
+    return comp_count
+
+
+def is_prime(num):
+    """
+    Checks if the given number is prime.
+    """
+    for val in range(2, int(math.sqrt(num)) + 1):
+        if num % val == 0:
+            return False
+    return True
