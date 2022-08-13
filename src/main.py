@@ -290,6 +290,19 @@ def solve_day22():
     print("==========")
 
 
+def solve_day23():
+    """
+    Solves AOC 2017 Day 23 Parts 1 and 2, printing out the solutions.
+    """
+    print("AOC 2017 Day 23 - \"Coprocessor Conflagration\"")
+    input_data = day23.process_input_file()
+    p1_solution = day23.solve_part1(input_data)
+    print(f"> P1 solution - {p1_solution}")
+    p2_solution = day23.solve_part2(input_data)
+    print(f"> P2 solution - {p2_solution}")
+    print("==========")
+
+
 if __name__ == "__main__":
     # Import to allow execution from project top-level directory
     import os
@@ -298,7 +311,7 @@ if __name__ == "__main__":
     # Solution module imports
     from src.solutions import day01, day02, day03, day04, day05, day06, day07, \
         day08, day09, day10, day11, day12, day13, day14, day15, day16, day17, \
-        day18, day19, day20, day21, day22
+        day18, day19, day20, day21, day22, day23
     # Main solver methods
     print("==========")
     solve_day01()
@@ -323,3 +336,4 @@ if __name__ == "__main__":
     solve_day20()
     solve_day21()
     solve_day22()
+    solve_day23()

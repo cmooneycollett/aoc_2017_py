@@ -22,6 +22,8 @@ class Instruction(Enum):
     MOD = auto()    # modulo
     RCV = auto()    # recover / receive
     JGZ = auto()    # jump if greater than zero
+    SUB = auto()    # subtract (from register)
+    JNZ = auto()    # jump if not zero
 
     @classmethod
     def parse_raw_input(cls, raw_input):
@@ -36,6 +38,8 @@ class Instruction(Enum):
         regex_mod = re.compile(r"^mod ([a-z]) ([a-z]|-?\d+)$")
         regex_rcv = re.compile(r"^rcv ([a-z]|-?\d+)$")
         regex_jgz = re.compile(r"^jgz ([a-z]|-?\d+) ([a-z]|-?\d+)$")
+        regex_sub = re.compile(r"^sub ([a-z]) ([a-z]|-?\d+)$")
+        regex_jnz = re.compile(r"^jnz ([a-z]|-?\d+) ([a-z]|-?\d+)$")
         instructions = []
         for line in raw_input.splitlines():
             if len(line := line.strip()) == 0:
@@ -43,17 +47,28 @@ class Instruction(Enum):
             if match_snd := regex_snd.match(line):
                 instructions.append((Instruction.SND, match_snd.group(1)))
             elif match_set := regex_set.match(line):
-                instructions.append((Instruction.SET, match_set.group(1), match_set.group(2)))
+                instructions.append(
+                    (Instruction.SET, match_set.group(1), match_set.group(2)))
             elif match_add := regex_add.match(line):
-                instructions.append((Instruction.ADD, match_add.group(1), match_add.group(2)))
+                instructions.append(
+                    (Instruction.ADD, match_add.group(1), match_add.group(2)))
             elif match_mul := regex_mul.match(line):
-                instructions.append((Instruction.MUL, match_mul.group(1), match_mul.group(2)))
+                instructions.append(
+                    (Instruction.MUL, match_mul.group(1), match_mul.group(2)))
             elif match_mod := regex_mod.match(line):
-                instructions.append((Instruction.MOD, match_mod.group(1), match_mod.group(2)))
+                instructions.append(
+                    (Instruction.MOD, match_mod.group(1), match_mod.group(2)))
             elif match_rcv := regex_rcv.match(line):
                 instructions.append((Instruction.RCV, match_rcv.group(1)))
             elif match_jgz := regex_jgz.match(line):
-                instructions.append((Instruction.JGZ, match_jgz.group(1), match_jgz.group(2)))
+                instructions.append(
+                    (Instruction.JGZ, match_jgz.group(1), match_jgz.group(2)))
+            elif match_sub := regex_sub.match(line):
+                instructions.append(
+                    (Instruction.SUB, match_sub.group(1), match_sub.group(2)))
+            elif match_jnz := regex_jnz.match(line):
+                instructions.append(
+                    (Instruction.JNZ, match_jnz.group(1), match_jnz.group(2)))
         return instructions
 
 
@@ -73,6 +88,7 @@ class SoundComputer:
         self.awaiting_input = False
         self.halted = False
         self.total_sounds_sent = 0
+        self.execution_counts = {instruct: 0 for instruct in Instruction}
 
     def execute_program(self):
         """
@@ -81,6 +97,7 @@ class SoundComputer:
         if self.halted:
             return
         while 0 <= self.cursor < len(self.instructions):
+            self.execution_counts[self.instructions[self.cursor][0]] += 1
             match self.instructions[self.cursor][0]:
                 case Instruction.SND:
                     param = self.instructions[self.cursor][1]
@@ -121,6 +138,17 @@ class SoundComputer:
                     check_value = self.try_register_read(param1)
                     jump_value = self.try_register_read(param2)
                     if check_value > 0:
+                        self.cursor += jump_value - 1
+                case Instruction.SUB:
+                    reg = self.instructions[self.cursor][1]
+                    param = self.instructions[self.cursor][2]
+                    self.registers[reg] -= self.try_register_read(param)
+                case Instruction.JNZ:
+                    param1 = self.instructions[self.cursor][1]
+                    param2 = self.instructions[self.cursor][2]
+                    check_value = self.try_register_read(param1)
+                    jump_value = self.try_register_read(param2)
+                    if check_value != 0:
                         self.cursor += jump_value - 1
             self.cursor += 1
         self.halted = True
@@ -188,3 +216,16 @@ class SoundComputer:
         Checks if the sound computer is awaiting input.
         """
         return self.awaiting_input
+
+    def get_execution_count_mul(self):
+        """
+        Returns the number of times the SoundComputer has executed the "mul"
+        instruction.
+        """
+        return self.execution_counts[Instruction.MUL]
+
+    def get_instructions(self):
+        """
+        Gets the instructions of the SoundComputer;
+        """
+        return self.instructions
