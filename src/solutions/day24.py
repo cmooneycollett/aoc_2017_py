@@ -26,30 +26,44 @@ def solve_part1(components):
     """
     return find_strongest_bridge(components)
 
-def find_strongest_bridge(components):
+
+def solve_part2(components):
+    """
+    Solves AOC 2017 Day 24 Part 2 // Determines the strength of the longest
+    bridge that can be assembled from the given components, with the highest
+    strength taken if there are multiple bridges with the longest length.
+    """
+    return find_strongest_bridge(components, for_longest_bridge=True)
+
+
+def find_strongest_bridge(components, for_longest_bridge=False):
     """
     Finds the strength of the strongest bridge that can be assembled from the
     given components.
     """
-    max_strength = []
+    bridge_strength_length = []
     for comp in components:
         if comp[0] == 0:
             remaining_components = list(components)
             remaining_components.remove(comp)
             link = (comp[0], comp[1])
             assembled = [link]
-            find_strongest_bridge_recursive(remaining_components, assembled, max_strength)
+            find_strongest_bridge_recursive(
+                remaining_components, assembled, bridge_strength_length, for_longest_bridge)
         elif comp[1] == 0:
             remaining_components = list(components)
             remaining_components.remove(comp)
             link = (comp[1], comp[0])
             assembled = [link]
-            find_strongest_bridge_recursive(remaining_components, assembled, max_strength)
-    if len(max_strength) == 0:
+            find_strongest_bridge_recursive(
+                remaining_components, assembled, bridge_strength_length, for_longest_bridge)
+    if len(bridge_strength_length) == 0:
         return None
-    return max_strength[0]
+    return bridge_strength_length[0][0]
 
-def find_strongest_bridge_recursive(components, assembled, max_strength):
+
+def find_strongest_bridge_recursive(components, assembled, bridge_strength_length,
+                                    for_longest_bridge):
     """
     Extends the currently assembled components if possible. If the assembly
     cannot be extended further, calculates its strength and updates max_strength
@@ -62,25 +76,26 @@ def find_strongest_bridge_recursive(components, assembled, max_strength):
             remaining_components.remove(comp)
             link = (comp[0], comp[1])
             new_assembled.append(link)
-            find_strongest_bridge_recursive(remaining_components, new_assembled, max_strength)
+            find_strongest_bridge_recursive(
+                remaining_components, new_assembled, bridge_strength_length, for_longest_bridge)
         elif comp[1] == assembled[-1][1]:
             remaining_components = list(components)
             new_assembled = list(assembled)
             remaining_components.remove(comp)
             link = (comp[1], comp[0])
             new_assembled.append(link)
-            find_strongest_bridge_recursive(remaining_components, new_assembled, max_strength)
+            find_strongest_bridge_recursive(
+                remaining_components, new_assembled, bridge_strength_length, for_longest_bridge)
+    # Calculate bridge strength and check for length and strength
     strength = sum(left + right for (left, right) in assembled)
-    if len(max_strength) == 0:
-        max_strength.append(strength)
-    elif strength > max_strength[0]:
-        max_strength[0] = strength
-
-
-
-
-def solve_part2(_components):
-    """
-    Solves AOC 2017 Day 24 Part 2 // ###
-    """
-    return NotImplemented
+    if len(bridge_strength_length) == 0:
+        bridge_strength_length.append((strength, len(assembled)))
+    elif for_longest_bridge:
+        if len(assembled) > bridge_strength_length[0][1]:
+            bridge_strength_length[0] = (strength, len(assembled))
+        elif len(assembled) == bridge_strength_length[0][1] and \
+                strength > bridge_strength_length[0][0]:
+            bridge_strength_length[0] = (strength, len(assembled))
+    else:
+        if strength > bridge_strength_length[0][0]:
+            bridge_strength_length[0] = (strength, len(assembled))

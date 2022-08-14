@@ -430,3 +430,12 @@ def test_day24_part1():
     input_data = day24.process_input_file()
     solution = day24.solve_part1(input_data)
     assert solution == 1695
+
+
+def test_day24_part2():
+    """
+    Solution test method for AOC 2017 Day 24 Part 2.
+    """
+    input_data = day24.process_input_file()
+    solution = day24.solve_part2(input_data)
+    assert solution == 1673
