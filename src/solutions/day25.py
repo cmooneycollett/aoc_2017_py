@@ -69,6 +69,7 @@ def solve_part1(turing_config):
 
 def solve_part2(_turing_config):
     """
-    Solves AOC 2017 Day 25 Part 2 // ###
+    Solves AOC 2017 Day 25 Part 2 // The printer has been rebooted and Christmas
+    is saved!
     """
-    return NotImplemented
+    return True
