@@ -448,3 +448,12 @@ def test_day25_part1():
     input_data = day25.process_input_file()
     solution = day25.solve_part1(input_data)
     assert solution == 5744
+
+
+def test_day25_part2():
+    """
+    Solution test method for AOC 2017 Day 25 Part 2.
+    """
+    input_data = day25.process_input_file()
+    solution = day25.solve_part2(input_data)
+    assert solution is True
